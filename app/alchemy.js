@@ -36,7 +36,7 @@ function pull(year,month,nextYear,nextMonth){
     }
     setTimeout(function(){
       pull(year,month,nextYear,nextMonth);
-    },8000);
+    },5000);
   }
 }
 
@@ -81,12 +81,16 @@ function processArticles(hearst_response){
               type="model";
             }
             if (match) {
-              
-              Article.create({name:match.text, type:type, dateInt:new Date(theArticle.publishDate).getTime(),sentimentType:match.sentiment.type,
-                sentimentValue:match.sentiment.score,relevance:match.relevance,
-                title:theArticle.fullTitle,body:theArticle.bodyHTML.body}, 
-                function(error){
-                  console.log('Saved');
+              var score;
+              if(match.sentiment.type=="neutral"){
+                score=0.0;
+              } else {
+                score = match.sentiment.score;
+              }
+              Article.update({name:match.text, type:type, dateInt:new Date(theArticle.publishDate).getTime(),
+                relevance:match.relevance},{$set:{sentimentValue:score}}, 
+                function(error,affected){
+                  console.log(affected);
               });
             } 
           }
