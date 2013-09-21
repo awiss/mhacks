@@ -12,8 +12,7 @@ exports.index = function(req, res){
 exports.model = function(req,res){
 	var modelName = req.params.model;
 	modelName = modelName.replace('_',' ');
-	Article.find({ name: modelName, type: 'model'}, function(err, docs){
-		res.send(docs);
+	Article.find({ name: modelName, type: 'model'}).sort({dateInt:'asc'}).exec(function(err, docs){
 		var values = [];
 		var dates = [];
 		for(var i = 0; i < docs.length; i++) {
