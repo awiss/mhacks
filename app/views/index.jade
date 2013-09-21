@@ -1,8 +1,14 @@
 extends layout
 
 block content
+  script
+    var values = [#{values}];
+    var dates = [#{dates}];
+    var modelName = "#{modelName}";
+  script(src="/js/highchartTheme.js")
+  script(src="/js/chart.js")
   #container
-    h1= title
-    p Welcome to #{title}
+    p #{modelName}
+    #graphContainer
     
 

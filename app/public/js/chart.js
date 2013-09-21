@@ -16,14 +16,8 @@ $(document).ready(function(){
           }
       },
       series: [{
-          name: 'Jane',
-          data: [1, 0, 4]
-      }, {
-          name: 'John',
-          data: [5, 7, 3]
-      }, {
-          name: 'Dong',
-          data: [2, 5, 3]
+          name: modelName,
+          data: values
       }]
   });
 });
