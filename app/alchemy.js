@@ -36,7 +36,7 @@ function pull(year,month,nextYear,nextMonth){
     }
     setTimeout(function(){
       pull(year,month,nextYear,nextMonth);
-    },4000);
+    },8000);
   }
 }
 
