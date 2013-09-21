@@ -7,24 +7,15 @@ a {
 }
 
 #container {
-	width: 910px;
+	width: 90%;
 	margin: 0 auto;
 	text-align: center;
 	height: 100%;
 	overflow: hidden;
 }
 
-#formContainer {
-	margin-top: 0px;
-	padding-top: 0px;
-	width: 250px;
-	min-height: 200px;
-	float: left;
-	margin-right: 10px;
-}
-
 #graphContainer {
-	float: left;
-	width: 650px;
-	height: 500px;
+	width: 100%;
+	height: 550px;
+	margin: 0 auto;
 }

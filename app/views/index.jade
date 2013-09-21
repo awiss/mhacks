@@ -5,10 +5,14 @@ block content
     var values = [#{values}];
     var dates = [#{dates}];
     var modelName = "#{modelName}";
+    var data = [];
+    for (var i=0; i < values.length; i++){
+      data[i] = [dates[i], values[i]];
+    }
   script(src="/js/highchartTheme.js")
   script(src="/js/chart.js")
   #container
-    p #{modelName}
+    h1 #{modelName}
     #graphContainer
     
 

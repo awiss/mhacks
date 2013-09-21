@@ -2,22 +2,28 @@ $(document).ready(function(){
   var highchartsOptions = Highcharts.setOptions(Highcharts.theme);  
   $('#graphContainer').highcharts({
       chart: {
-          type: 'line'
+          type: 'line',
+          zoomType: 'x'
       },
       title: {
-          text: 'Fruit Consumption'
+          text: 'Weighted Sentiment vs Time'
       },
       xAxis: {
-          categories: ['Apples', 'Bananas', 'Oranges']
+          title: {
+          	text: "Date"
+          },
+          type: "datetime"
       },
       yAxis: {
           title: {
-              text: 'Fruit eaten'
-          }
+              text: 'Weighted Sentiment'
+          },
+          min: -.5,
+          minRange: .9
       },
       series: [{
           name: modelName,
-          data: values
+          data: data
       }]
   });
 });

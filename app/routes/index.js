@@ -20,9 +20,6 @@ exports.model = function(req,res){
 			dates.push(docs[i].dateInt);
 		}
 		res.render('index', {modelName: modelName, values: values, dates: dates});
-		console.log(modelName);
-		console.log(values);
-		console.log(dates);
 	});
 };
 
@@ -36,8 +33,5 @@ exports.make = function(req,res){
 			values.push(docs[i].sentimentValue * docs[i].relevance);
 			dates.push(docs[i].dateInt);
 		}
-		console.log(makeName);
-		console.log(values);
-		console.log(dates);
 	});
 };
