@@ -1,4 +1,15 @@
 $(document).ready(function(){
+
+	function overlay() {
+		$('#overlay').fadeIn();
+		document.getElementById('overlayModal').scrollTop = 0;
+	  $('#overlay').show();
+	}
+
+	$('#overlay').on('click', function(){
+		$('#overlay').fadeOut();
+		$('#overalyText').empty();
+	});
   var highchartsOptions = Highcharts.setOptions(Highcharts.theme); 
   console.log(data);
   $('#graphContainer').highcharts({
@@ -17,6 +28,7 @@ $(document).ready(function(){
       				click: function() {
       					$.ajax({url:"http://localhost:3000/body/"+this.mongoId,success:function(res){
                   overlay();
+                  $('#overlayText').html(res);
                 }});
       				},
       			}
