@@ -7,6 +7,10 @@ exports.index = function(req, res){
   res.render('index', { title: 'Express' });
 };
 
-exports.car = function(req,res){
+exports.model = function(req,res){
+
+};
+
+exports.make = function(req,res){
 
 };
