@@ -1,13 +1,12 @@
-module.exports=function(mongoose) {
-  var Article =
-  mongoose.model('Article',
-    { name: String,
-      make:String,
-      model:String,
-      makeSentimentType:String,
-      makeSentimentValue:String
-      modelSentimentType:String,
-      modelSentimentValue:String
+module.exports=function(mongoose){
+  var Schema = mongoose.Schema;
+  var articleSchema = new Schema(
+    { name:  {type:String},
+      type:  {type:String},
+      sentimentType: {type:String},
+      sentimentValue: {type:Number},
+      relevance: {type:Number},
+      dateInt: {type:Number}
     });
-
-};
+  mongoose.model('Article',articleSchema);
+}
