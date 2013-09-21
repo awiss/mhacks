@@ -1,5 +1,6 @@
 $(document).ready(function(){
   var highchartsOptions = Highcharts.setOptions(Highcharts.theme); 
+  console.log(data);
   $('#graphContainer').highcharts({
       chart: {
           type: 'line',

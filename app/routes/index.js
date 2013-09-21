@@ -18,6 +18,8 @@ exports.model = function(req,res){
 		var ids = [];
 		var titles = [];
 		for(var i = 0; i < docs.length; i++) {
+			console.log(docs[i].sentimentValue);
+			console.log(docs[i].relevance);
 			values.push(docs[i].sentimentValue * docs[i].relevance);
 			dates.push(docs[i].dateInt);
 			ids.push(docs[i]._id);
