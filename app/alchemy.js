@@ -82,7 +82,7 @@ function processArticles(hearst_response){
             }
             if (match) {
               
-              Article.update({name:match.text, type:type,dateInt:new Date(theArticle.publishDate).getTime(),relevance:match.relevance},{$set:{body:theArticle.bodyHTML.body}}, 
+              Article.update({name:match.text, type:type,dateInt:new Date(theArticle.publishDate).getTime(),relevance:match.relevance},{$set:{title:theArticle.fullTitle,body:theArticle.bodyHTML.body}}, 
                 function(error,affected){
                   console.log(affected);
               });
