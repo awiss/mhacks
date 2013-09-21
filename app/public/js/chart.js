@@ -15,7 +15,7 @@ $(document).ready(function(){
       			events: {
       				click: function() {
       					$.ajax({url:"http://localhost:3000/body/"+this.mongoId,success:function(res){
-                  console.log(res);
+                  overlay();
                 }});
       				},
       			}

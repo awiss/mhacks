@@ -9,14 +9,21 @@ block content
     console.log(ids);
     console.log(titles);
     var modelName = "#{modelName}";
+    console.log(modelName);
     var data = [];
     for (var i=0; i < values.length; i++){
       data[i] = {x:dates[i], y:values[i],mongoId:ids[i],articleTitle:titles[i]};
+    }
+    function overlay() {
+      el = document.getElementById("overlay");
+      el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
     }
   script(src="/js/highchartTheme.js")
   script(src="/js/chart.js")
   #container
     h1 #{modelName}
     #graphContainer
-    
+    #overlay
+      div
+        p Hello
 

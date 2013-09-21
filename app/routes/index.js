@@ -23,6 +23,7 @@ exports.model = function(req,res){
 			ids.push(docs[i]._id);
 			titles.push(docs[i].title);
 		}
+		console.log(titles);
 		res.render('index', {modelName: modelName, values: values, dates: dates, ids:ids,titles:titles});
 	});
 };
@@ -41,6 +42,7 @@ exports.make = function(req,res){
 			ids.push(docs[i]._id);
 			titles.push(docs[i].title);
 		}
+		console.log(titles);
 		res.render('index', {modelName: makeName, values: values, dates: dates, ids:ids,titles:titles});
 	});
 };
