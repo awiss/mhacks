@@ -1,4 +1,5 @@
-
+var mongoose = require('mongoose');
+var Article = mongoose.model('Article');
 /*
  * GET home page.
  */

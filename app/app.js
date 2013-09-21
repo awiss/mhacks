@@ -11,6 +11,7 @@ var express = require('express')
   , mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/test');
+require('./models/article')(mongoose);
 var app = express();
 
 // all environments
