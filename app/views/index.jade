@@ -2,7 +2,7 @@ extends layout
 
 block content
   script
-    var values = [#{values}];
+    var values = [#{values}]; 
     var dates = [#{dates}];
     var titles = !{JSON.stringify(titles)};
     var ids = !{JSON.stringify(ids)};
@@ -11,7 +11,7 @@ block content
     var modelName = "#{modelName}";
     var data = [];
     for (var i=0; i < values.length; i++){
-      data[i] = [dates[i], values[i]];
+      data[i] = {x:dates[i], y:values[i],mongoId:ids[i],articleTitle:titles[i]};
     }
   script(src="/js/highchartTheme.js")
   script(src="/js/chart.js")

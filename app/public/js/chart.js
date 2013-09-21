@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  var highchartsOptions = Highcharts.setOptions(Highcharts.theme);  
+  var highchartsOptions = Highcharts.setOptions(Highcharts.theme); 
   $('#graphContainer').highcharts({
       chart: {
           type: 'line',
@@ -14,11 +14,10 @@ $(document).ready(function(){
       		point: {
       			events: {
       				click: function() {
-      					console.log(this);
+      					$.ajax({url:"http://localhost:3000/body/"+this.mongoId,success:function(res){
+                  console.log(res);
+                }});
       				},
-      				mouseOver: function() {
-
-      				}
       			}
       		}
       	}
@@ -27,9 +26,10 @@ $(document).ready(function(){
       	shared: true,
         useHTML: true,
         headerFormat: '<small>{point.key}</small><table>',
-        pointFormat: '<tr><td>Article Title:</td></tr>' +
-        							'<tr><td style="color: {series.color}">Weighted Relevance: </td>' +
-        						'<td style="text-align: right"><b>{point.y}</b></td></tr>',
+        pointFormat: '<tr><td>Article Title:</td><</tr>' +
+                  '<td style="text-align: left"><b>{point.articleTitle}</b></td>' +
+        							'<tr><td><span style="color: {series.color}">Weighted Sentiment:</span> <b>{point.y}</b></td>' +
+        						'</tr>',
         footerFormat: '</table>',
         valueDecimals: 4
       },

@@ -42,5 +42,9 @@ exports.make = function(req,res){
 };
 
 exports.body = function(req,res){
-
+	var id = req.params.id;
+	Article.findById(id,{body:1},function(err,doc){
+		res.write(doc.body);
+		res.end();
+	});
 }
