@@ -1,5 +1,4 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -11,10 +10,13 @@ a {
 	width: 910px;
 	margin: 0 auto;
 	text-align: center;
-	border: 1px solid blue;
+	height: 100%;
+	overflow: hidden;
 }
 
 #formContainer {
+	margin-top: 0px;
+	padding-top: 0px;
 	width: 250px;
 	min-height: 200px;
 	float: left;
