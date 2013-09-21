@@ -5,7 +5,7 @@ var Article = mongoose.model("Article");
 var AlchemyAPI = require('alchemy-api');
 var alchemy = new AlchemyAPI('2094dd01fd7cbceb7e1bb916840e40e81f25d16f');
 
-
+pull(9,1,9,2);
 function pull(year,month,nextYear,nextMonth){
   if(year<13 || month<10){
     console.log(year);
@@ -39,7 +39,7 @@ function pull(year,month,nextYear,nextMonth){
     },4000);
   }
 }
-pull(11,1,11,2);
+
 
 
 function processArticles(hearst_response){
@@ -81,10 +81,10 @@ function processArticles(hearst_response){
               type="model";
             }
             if (match) {
-              Article.update({name:match.text, type:type,dateInt:new Date(theArticle.publishDate).getTime(),relevance:match.relevance},{sentimentType:match.sentiment.type
-                ,sentimentValue:match.sentiment.score},{upsert:true}, 
-                function(error){
-                  console.log("Saved");
+              
+              Article.update({name:match.text, type:type,dateInt:new Date(theArticle.publishDate).getTime(),relevance:match.relevance},{$set:{body:theArticle.bodyHTML.body}}, 
+                function(error,affected){
+                  console.log(affected);
               });
             } 
           }

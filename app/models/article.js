@@ -6,7 +6,9 @@ module.exports=function(mongoose){
       sentimentType: {type:String},
       sentimentValue: {type:Number},
       relevance: {type:Number},
-      dateInt: {type:Number}
+      dateInt: {type:Number},
+      title: {type:String},
+      body: {type:String}
     });
   mongoose.model('Article',articleSchema);
 }

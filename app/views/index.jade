@@ -4,6 +4,10 @@ block content
   script
     var values = [#{values}];
     var dates = [#{dates}];
+    var titles = !{JSON.stringify(titles)};
+    var ids = !{JSON.stringify(ids)};
+    console.log(ids);
+    console.log(titles);
     var modelName = "#{modelName}";
     var data = [];
     for (var i=0; i < values.length; i++){
