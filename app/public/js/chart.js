@@ -25,8 +25,8 @@ $(document).ready(function(){
       tooltip: {
       	shared: true,
         useHTML: true,
-        headerFormat: '<small>{point.key}</small><table>',
-        pointFormat: '<tr><td>Article Title:</td><</tr>' +
+        headerFormat: '{point.key}<table>',
+        pointFormat: '<tr><td>Article Title:</td></tr>' +
                   '<td style="text-align: left"><b>{point.articleTitle}</b></td>' +
         							'<tr><td><span style="color: {series.color}">Weighted Sentiment:</span> <b>{point.y}</b></td>' +
         						'</tr>',

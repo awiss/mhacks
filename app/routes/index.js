@@ -12,14 +12,18 @@ exports.index = function(req, res){
 exports.model = function(req,res){
 	var modelName = req.params.model;
 	modelName = modelName.replace('_',' ');
-	Article.find({ name: modelName, type: 'model'}).sort({dateInt:'asc'}).exec(function(err, docs){
+	Article.find({ name: modelName, type: 'model'},{sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
 		var values = [];
 		var dates = [];
+		var ids = [];
+		var titles = [];
 		for(var i = 0; i < docs.length; i++) {
 			values.push(docs[i].sentimentValue * docs[i].relevance);
 			dates.push(docs[i].dateInt);
+			ids.push(docs[i]._id);
+			titles.push(docs[i].title);
 		}
-		res.render('index', {modelName: modelName, values: values, dates: dates});
+		res.render('index', {modelName: modelName, values: values, dates: dates, ids:ids,titles:titles});
 	});
 };
 
