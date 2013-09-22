@@ -63,9 +63,7 @@ function processArticles(hearst_response){
       if (keyword.text.toLowerCase().indexOf(hearst_response.content.model[i].name.toLowerCase())>-1) {
         keyword.text=hearst_response.content.model[i].name;
         return keyword;
-      } else if (hearst_response.content.model[i].name.toLowerCase().indexOf(keyword.text.toLowerCase())>-1){
-        return keyword;
-      }
+      } 
     }
     return null;
   }
