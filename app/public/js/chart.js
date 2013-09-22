@@ -10,8 +10,41 @@ $(document).ready(function(){
 		$('#overlay').fadeOut();
 		$('#overalyText').empty();
 	});
+  var exp;
+  if(make){
+    exp = {
+      buttons: {
+        customButton: {
+                        x: -62,
+                        onclick: function () {
+                            var chart = $('#graphContainer').highcharts();
+                            var series = chart.series;
+                            var vis = false;
+                            for (var j=0; j < series.length; j+=2){
+                              vis = vis || series[j].visible;
+                            }
+                            for (var j=0; j < series.length; j+=2){
+                              series[j].setVisible(!vis,false);
+                            }
+                            chart.redraw();
+                        },
+                        symbol: 'circle'
+        },
+        contextButton: {
+
+        }
+      }
+    }
+  } else {
+    exp = {
+      buttons: {
+        contextButton: {
+
+        }
+      }
+    } 
+  }
   var highchartsOptions = Highcharts.setOptions(Highcharts.theme); 
-  console.log(data);
   $('#graphContainer').highcharts({
       chart: {
         type: 'line',
@@ -30,7 +63,7 @@ $(document).ready(function(){
       			events: {
       				click: function() {
       					var self = this;
-      					$.ajax({url:"http://localhost:3000/body/"+this.mongoId,success:function(res){
+      					$.ajax({url:"http://localhost:3000/body/"+this.mongoId+"/"+make,success:function(res){
                   overlay();
                   $('#overlayText').html('<h2>' + self.articleTitle + '</h2>' + res);
                 }});
@@ -39,27 +72,7 @@ $(document).ready(function(){
       		}
       	}
       },
-      exporting: {
-          buttons: {
-          	customButton: {
-      	                    x: -62,
-      	                    onclick: function () {
-      	                    		var series = $('#graphContainer').highcharts().series;
-      	                    		var vis = false;
-      	                    		for (var j=0; j < series.length; j+=2){
-      	                    			vis = vis || series[j].visible;
-      	                    		}
-      	                        for (var j=0; j < series.length; j+=2){
-      	                        	series[j].setVisible(!vis);
-      	                        }
-      	                    },
-      	                    symbol: 'circle'
-      	    },
-            contextButton: {
-
-            }
-          }
-      },
+      exporting: exp,
       tooltip: {
       	shared: true,
         useHTML: true,

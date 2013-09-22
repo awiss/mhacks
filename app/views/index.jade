@@ -2,20 +2,35 @@ extends layout
 
 block content
   script
-    var seriesArr = [];
+    
+    var make = !{JSON.stringify(make)};
+    console.log(make);
     var data = !{JSON.stringify(data)};
-    var monthData = !{JSON.stringify(monthData)};
+    var seriesArr = [];
     var titleArr = [];
-    for(x in data){
-      titleArr.push(x);
-      seriesArr.push({
-        name:x,
-        data:data[x]
+    var monthData;
+    if(make){
+      monthData = !{JSON.stringify(monthData)};
+      
+      for(x in data){
+        titleArr.push(x);
+        seriesArr.push({
+          name:x,
+          data:data[x]
+          });
+        seriesArr.push({
+          name:x + " avg",
+          data:monthData[x]
+          });
+      }
+    } else {
+      for(x in data){
+        titleArr.push(x);
+        seriesArr.push({
+          name:x,
+          data:data[x]
         });
-      seriesArr.push({
-        name:x + " avg",
-        data:monthData[x]
-        });
+      } 
     }
   script(src="/js/highchartTheme.js")
   script(src="/js/chart.js")

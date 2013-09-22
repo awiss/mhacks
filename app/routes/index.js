@@ -45,7 +45,7 @@ exports.model = function(req,res){
 				articleTitle: docs[i].title
 			});
 		}
-		res.render('index', {modelName: modelName, data:modelData});
+		res.render('index', {make : false, data:modelData, monthData: null});
 	});
 };
 
@@ -98,14 +98,26 @@ exports.make = function(req,res){
 				}
 			}
 		}
-		res.render('index', {modelName: makeName, data:makeData, monthData:monthsFinal});
+		res.render('index', {make:true, data:makeData, monthData:monthsFinal});
 	});
 };
 
 exports.body = function(req,res){
 	var id = req.params.id;
-	Entity.findById(id,{body:1},function(err,doc){
-		res.write(doc.body);
-		res.end();
-	});
+	var make = req.params.make;
+	if(make=='true'){
+		Entity.findById(id,{body:1},function(err,doc){
+			if(typeof doc != 'undefined' && doc!=null){
+				res.write(doc.body);
+				res.end();
+			}
+		});
+	} else {
+		Article.findById(id,{body:1},function(err,doc){
+			if(typeof doc != 'undefined' && doc!=null){
+				res.write(doc.body);
+				res.end();
+			}
+		});
+	}
 }
