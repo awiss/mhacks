@@ -14,14 +14,14 @@ $(document).ready(function(){
   console.log(data);
   $('#graphContainer').highcharts({
       chart: {
-          type: 'line',
-          zoomType: 'x'
+        type: 'line',
+        zoomType: 'x'
       },
       title: {
-          text: modelName,
-          style: {
-          	fontSize: '40px'
-          }
+        text: modelName
+      },
+      subtitle: {
+      	text: 'Weighted Sentiment vs Date'
       },
       plotOptions: {
       	series: {
