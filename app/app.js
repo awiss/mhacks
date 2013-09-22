@@ -11,6 +11,7 @@ var express = require('express')
 
 mongoose.connect('mongodb://localhost/test');
 require('./models/article')(mongoose);
+require('./models/entity')(mongoose);
 var routes = require('./routes');
 var app = express();
 

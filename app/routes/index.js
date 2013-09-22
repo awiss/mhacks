@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
+var Entity = mongoose.model("Entity");
 var Article = mongoose.model("Article");
-
 /*
  * GET home page.
  */
@@ -44,15 +44,17 @@ exports.make = function(req,res){
 		makeData[makeNames[i]]=[];
 	}
 
-	Article.find({ name: { $in: makeNames }, type: 'make'},{name:1,sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
+	Entity.find({ name: { $in: makeNames }, type: 'make'},{name:1,sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
 		for(var i = 0; i < docs.length; i++) {
-			console.log(docs[i]);
-			makeData[docs[i].name].push({ 
-				y: docs[i].sentimentValue * docs[i].relevance,
-				x: docs[i].dateInt,
-				mongoId: docs[i]._id,
-				articleTitle: docs[i].title
-			});
+
+			if(docs[i].relevance>0.7){
+				makeData[docs[i].name].push({ 
+					y: docs[i].sentimentValue * docs[i].relevance*docs[i].relevance*docs[i].relevance,
+					x: docs[i].dateInt,
+					mongoId: docs[i]._id,
+					articleTitle: docs[i].title
+				});
+			}
 		}
 		res.render('index', {modelName: makeName, data:makeData});
 	});
@@ -60,7 +62,7 @@ exports.make = function(req,res){
 
 exports.body = function(req,res){
 	var id = req.params.id;
-	Article.findById(id,{body:1},function(err,doc){
+	Entity.findById(id,{body:1},function(err,doc){
 		res.write(doc.body);
 		res.end();
 	});
