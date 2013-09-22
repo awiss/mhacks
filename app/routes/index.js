@@ -13,7 +13,6 @@ while(start<now){
  start = new Date(start.getFullYear(),start.getMonth()+1,start.getDate());
 }
 var months = {};
-console.log(monthTimes);
 function addtoMonthData(name,time,value){
 	for(var i=0;i<monthTimes.length;i++){
 		if(time<monthTimes[i] && i>0){
