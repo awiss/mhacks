@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
 require('./models/entity')(mongoose);
+require('./models/article')(mongoose);
 var Entity = mongoose.model("Entity");
+var Article = mongoose.model("Article");
 var AlchemyAPI = require('alchemy-api');
 var alchemy = new AlchemyAPI('2094dd01fd7cbceb7e1bb916840e40e81f25d16f');
 
@@ -73,10 +75,10 @@ function processArticles(hearst_response){
     var article = articles[i];
     var text = article.bodyHTML.body.replace(/<.*?>/g,"");
     (function(theArticle){
-      alchemy.entities(text, {sentiment:1}, function(err, response) {
+      alchemy.keywords(text, {sentiment:1}, function(err, response) {
         if (!err){
         // See http://www.alchemyapi.com/api/keyword/htmlc.html for format of returned object
-          var entities = response.entities;
+          var entities = response.keywords;
           for (var j=0; j<entities.length;j++) {
             var entity = entities[j];
             var type = "make";
@@ -98,6 +100,7 @@ function processArticles(hearst_response){
                 relevance:match.relevance,sentimentValue:score,name:name,title:theArticle.fullTitle,body:theArticle.bodyHTML.body}
                 function(error,affected){
                   console.log(affected);
+
               });
             } 
           }
