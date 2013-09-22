@@ -97,11 +97,12 @@ function processArticles(hearst_response){
               var name = match.text;
               name = name.charAt(0).toUpperCase() + name.slice(1);
 
-              Article.create({type:type, sentimentType:match.sentiment.type, dateInt:new Date(theArticle.publishDate).getTime(),
-                relevance:match.relevance,sentimentValue:score,name:name,title:theArticle.fullTitle,body:theArticle.bodyHTML.body},
-
+              Article.update({type:type,name:name,sentimentType:match.sentiment.type, dateInt:new Date(theArticle.publishDate).getTime()},{$set:{
+                relevance:match.relevance,sentimentValue:score,title:theArticle.fullTitle,body:theArticle.bodyHTML.body}
+              },{upsert:true},
                 function(error,affected){
-                  console.log(error);
+                  console.log(affected);
+              }
 
               });
             } 
