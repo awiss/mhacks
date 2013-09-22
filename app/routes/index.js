@@ -12,13 +12,15 @@ while(start<now){
  monthTimes.push(start.getTime());
  start = new Date(start.getFullYear(),start.getMonth()+1,start.getDate());
 }
-console.log(monthTimes);
 var months = {};
-
+console.log(monthTimes);
 function addtoMonthData(name,time,value){
 	for(var i=0;i<monthTimes.length;i++){
 		if(time<monthTimes[i] && i>0){
 			months[name][i-1].push(value);
+			months[name][i].push(value);
+		if(i>1) months[name][i-2].push(value);
+			break;
 		}
 	}
 }
@@ -45,7 +47,7 @@ exports.model = function(req,res){
 				articleTitle: docs[i].title
 			});
 		}
-		res.render('index', {make : false, data:modelData, monthData: null});
+		res.render('index', {title:'Sentimental',make : false, data:modelData, monthData: null});
 	});
 };
 
@@ -67,16 +69,14 @@ exports.make = function(req,res){
 
 	Entity.find({ name: { $in: makeNames }, type: 'make'},{name:1,sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
 		for(var i = 0; i < docs.length; i++) {
-			if(docs[i].relevance>0.7){
-				var yvalue = docs[i].sentimentValue * docs[i].relevance;
-				addtoMonthData(docs[i].name,docs[i].dateInt,yvalue);
-				makeData[docs[i].name].push({ 
-					y: yvalue,
-					x: docs[i].dateInt,
-					mongoId: docs[i]._id,
-					articleTitle: docs[i].title
-				});
-			}
+			var yvalue = docs[i].sentimentValue * docs[i].relevance * docs[i].relevance * docs[i].relevance;
+			addtoMonthData(docs[i].name,docs[i].dateInt,yvalue);
+			makeData[docs[i].name].push({ 
+				y: yvalue,
+				x: docs[i].dateInt,
+				mongoId: docs[i]._id,
+				articleTitle: docs[i].title
+			});
 		}
 		function average(arr){
 			total=0;
@@ -86,9 +86,8 @@ exports.make = function(req,res){
 			return total/arr.length;
 		}
 		for (x in months){
-			console.log(months[x][4]);
-			for(var i=0; i<monthTimes.length;i++){
-				if(months[x][i].length>3){
+			for(var i=2; i<monthTimes.length;i++){
+				if(months[x][i].length>0){
 					total = 0;
 					for(var j=0;j<months[x][i].length;j++){
 						total+=months[x][i][j];
@@ -98,24 +97,33 @@ exports.make = function(req,res){
 				}
 			}
 		}
-		res.render('index', {make:true, data:makeData, monthData:monthsFinal});
+		res.render('index', {title:'Sentimental',make:true, data:makeData, monthData:monthsFinal});
 	});
 };
-
+function remotizeATags(html){
+	var regexp = /(<a[^>]*?\shref=['"])([\s\S]+?)['"]/g;
+	return html.replace(regexp,function(str,p1,p2){
+		if(p2.indexOf('/')==0){
+			return str.replace(p2,"http://www.caranddriver.com"+p2);
+		} else {
+			return str;
+		}
+	});
+}
 exports.body = function(req,res){
 	var id = req.params.id;
 	var make = req.params.make;
 	if(make=='true'){
 		Entity.findById(id,{body:1},function(err,doc){
 			if(typeof doc != 'undefined' && doc!=null){
-				res.write(doc.body);
+				res.write(remotizeATags(doc.body));
 				res.end();
 			}
 		});
 	} else {
 		Article.findById(id,{body:1},function(err,doc){
 			if(typeof doc != 'undefined' && doc!=null){
-				res.write(doc.body);
+				res.write(remotizeATags(doc.body));
 				res.end();
 			}
 		});

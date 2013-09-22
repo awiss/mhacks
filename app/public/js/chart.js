@@ -104,7 +104,7 @@ $(document).ready(function(){
       yAxis: {
           title: {
               text: 'Weighted Sentiment'
-          }
+          },
       },
       series: seriesArr
   });
