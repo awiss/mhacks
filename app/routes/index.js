@@ -10,15 +10,13 @@ var now = new Date().getTime();
 var start = new Date(2009,0,1);
 while(start<now){
  monthTimes.push(start.getTime());
- start = new Date(start.getFullYear(),start.getMonth()+1,start.getDate());
+ start = new Date(start.getFullYear(),start.getMonth()+2,start.getDate());
 }
 var months = {};
 function addtoMonthData(name,time,value){
 	for(var i=0;i<monthTimes.length;i++){
 		if(time<monthTimes[i] && i>0){
 			months[name][i-1].push(value);
-			months[name][i].push(value);
-		if(i>1) months[name][i-2].push(value);
 			break;
 		}
 	}
@@ -68,8 +66,10 @@ exports.make = function(req,res){
 
 	Entity.find({ name: { $in: makeNames }, type: 'make'},{name:1,sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
 		for(var i = 0; i < docs.length; i++) {
-			if(docs[i].relevance>0.3){
-				var yvalue = docs[i].sentimentValue * docs[i].relevance * docs[i].relevance * docs[i].relevance;
+			if(docs[i].name=='Toyota') console.log(docs[i]);
+			if(docs[i].relevance>0.5){
+
+				var yvalue = docs[i].sentimentValue * docs[i].relevance;
 				addtoMonthData(docs[i].name,docs[i].dateInt,yvalue);
 				makeData[docs[i].name].push({ 
 					y: yvalue,

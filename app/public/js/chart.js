@@ -56,6 +56,9 @@ $(document).ready(function(){
       subtitle: {
       	text: 'Weighted Sentiment vs Date'
       },
+      scrollbar: {
+        enabled: true
+      },
       plotOptions: {
       	series: {
       		cursor: 'pointer',
@@ -105,6 +108,8 @@ $(document).ready(function(){
           title: {
               text: 'Weighted Sentiment'
           },
+          min: -.5,
+          minRange: .9
       },
       series: seriesArr
   });

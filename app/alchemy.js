@@ -59,6 +59,9 @@ function processArticles(hearst_response){
   function check_model(keyword) {
     for (var i=0;i<hearst_response.content.model.length;i++) {
       if (keyword.text.toLowerCase().indexOf(hearst_response.content.model[i].name.toLowerCase())>-1) {
+        keyword.text=hearst_response.content.model[i].name;
+        return keyword;
+      } else if (hearst_response.content.model[i].name.toLowerCase().indexOf(keyword.text.toLowerCase())>-1){
         return keyword;
       }
     }
@@ -91,8 +94,8 @@ function processArticles(hearst_response){
               }
               var name = match.text;
               name = name.charAt(0).toUpperCase() + name.slice(1);
-              Entity.update({type:type, sentimentType:match.sentiment.type, dateInt:new Date(theArticle.publishDate).getTime(),
-                relevance:match.relevance,sentimentValue:score},{name:name}, 
+              Entity.create({type:type, sentimentType:match.sentiment.type, dateInt:new Date(theArticle.publishDate).getTime(),
+                relevance:match.relevance,sentimentValue:score,name:name,title:theArticle.fullTitle,body:theArticle.bodyHTML.body}
                 function(error,affected){
                   console.log(affected);
               });
