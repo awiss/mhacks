@@ -60,7 +60,7 @@ function processArticles(hearst_response){
   // if the model matches a keyword, returns a sentiment object associated with that model
   function check_model(keyword) {
     for (var i=0;i<hearst_response.content.model.length;i++) {
-      if (keyword.text.toLowerCase().indexOf(hearst_response.content.model[i].name.toLowerCase())>-1) {
+      if (keyword.text.toLowerCase() == hearst_response.content.model[i].name.toLowerCase()) {
         keyword.text=hearst_response.content.model[i].name;
         return keyword;
       } 
@@ -100,8 +100,6 @@ function processArticles(hearst_response){
               },{upsert:true},
                 function(error,affected){
                   console.log(affected);
-              }
-
               });
             } 
           }
