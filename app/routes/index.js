@@ -68,14 +68,16 @@ exports.make = function(req,res){
 
 	Entity.find({ name: { $in: makeNames }, type: 'make'},{name:1,sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
 		for(var i = 0; i < docs.length; i++) {
-			var yvalue = docs[i].sentimentValue * docs[i].relevance * docs[i].relevance * docs[i].relevance;
-			addtoMonthData(docs[i].name,docs[i].dateInt,yvalue);
-			makeData[docs[i].name].push({ 
-				y: yvalue,
-				x: docs[i].dateInt,
-				mongoId: docs[i]._id,
-				articleTitle: docs[i].title
-			});
+			if(docs[i].relevance>0.3){
+				var yvalue = docs[i].sentimentValue * docs[i].relevance * docs[i].relevance * docs[i].relevance;
+				addtoMonthData(docs[i].name,docs[i].dateInt,yvalue);
+				makeData[docs[i].name].push({ 
+					y: yvalue,
+					x: docs[i].dateInt,
+					mongoId: docs[i]._id,
+					articleTitle: docs[i].title
+				});
+			}
 		}
 		function average(arr){
 			total=0;
