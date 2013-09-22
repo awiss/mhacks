@@ -39,6 +39,20 @@ $(document).ready(function(){
       		}
       	}
       },
+      exporting: {
+          buttons: {
+          	customButton: {
+          	                    x: -62,
+          	                    onclick: function () {
+          	                        alert('Clicked');
+          	                    },
+          	                    symbol: 'circle'
+          	                  },
+            contextButton: {
+
+            }
+          }
+      },
       tooltip: {
       	shared: true,
         useHTML: true,
