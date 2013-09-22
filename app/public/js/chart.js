@@ -18,7 +18,10 @@ $(document).ready(function(){
           zoomType: 'x'
       },
       title: {
-          text: 'Weighted Sentiment vs Time'
+          text: modelName,
+          style: {
+          	fontSize: '40px'
+          }
       },
       plotOptions: {
       	series: {
@@ -26,9 +29,10 @@ $(document).ready(function(){
       		point: {
       			events: {
       				click: function() {
+      					var self = this;
       					$.ajax({url:"http://localhost:3000/body/"+this.mongoId,success:function(res){
                   overlay();
-                  $('#overlayText').html(res);
+                  $('#overlayText').html('<h2>' + self.articleTitle + '</h2>' + res);
                 }});
       				},
       			}

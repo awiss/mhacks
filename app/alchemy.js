@@ -5,7 +5,7 @@ var Article = mongoose.model("Article");
 var AlchemyAPI = require('alchemy-api');
 var alchemy = new AlchemyAPI('2094dd01fd7cbceb7e1bb916840e40e81f25d16f');
 
-pull(9,1,9,2);
+pull(11,6,11,7);
 function pull(year,month,nextYear,nextMonth){
   if(year<13 || month<10){
     console.log(year);
