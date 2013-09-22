@@ -44,7 +44,17 @@ exports.model = function(req,res){
 				articleTitle: docs[i].title
 			});
 		}
-		res.render('index', {title:'Sentimental',make : false, data:modelData, monthData: null});
+		Entity.find({ name:{$in:modelNames} , type: 'model'},{name:1,sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
+			for(var i = 0; i < docs.length; i++) {
+				modelData[docs[i].name].push({ 
+					y: docs[i].sentimentValue * docs[i].relevance,
+					x: docs[i].dateInt,
+					mongoId: docs[i]._id,
+					articleTitle: docs[i].title
+				});
+			}
+			res.render('index', {title:'Sentimental',make : false, data:modelData, monthData: null});
+		});
 	});
 };
 
