@@ -6,7 +6,7 @@ var Entity = mongoose.model("Entity");
 var Article = mongoose.model("Article");
 var AlchemyAPI = require('alchemy-api');
 var alchemy = new AlchemyAPI('2094dd01fd7cbceb7e1bb916840e40e81f25d16f');
-
+var counter = 0;
 pull(9,1,9,2);
 
 function pull(year,month,nextYear,nextMonth){
@@ -59,11 +59,15 @@ function processArticles(hearst_response){
 
   // if the model matches a keyword, returns a sentiment object associated with that model
   function check_model(keyword) {
-    for (var i=0;i<hearst_response.content.model.length;i++) {
-      if (keyword.text.toLowerCase().indexOf(hearst_response.content.model[i].name.toLowerCase())>-1) {
-        keyword.text=hearst_response.content.model[i].name;
+    var length=0;
+    var word=null;
+    for (var i=0;i<hearst_response.content.model.length;i++) { 
+      var reg = new RegExp("(^|\\s)"+hearst_response.content.model[i].name.toLowerCase()+"(\\s|$)");
+      if (reg.test(keyword.text.toLowerCase())) {
+        console.log(keyword.text.toLowerCase());
+        keyword.text=hearst_response.content.model[i].name.toLowerCase();
         return keyword;
-      } 
+      }  
     }
     return null;
   }
@@ -94,13 +98,12 @@ function processArticles(hearst_response){
               }
               var name = match.text;
               name = name.charAt(0).toUpperCase() + name.slice(1);
-              Article.update({type:type,name:name,sentimentType:match.sentiment.type, dateInt:new Date(theArticle.publishDate).getTime()},{$set:{
-                relevance:match.relevance,sentimentValue:score,title:theArticle.fullTitle,body:theArticle.bodyHTML.body}
-              },{upsert:true},
-                function(error,affected){
-                  console.log(affected);
-              }
-              });
+              // Article.update({type:type,name:name,sentimentType:match.sentiment.type, dateInt:new Date(theArticle.publishDate).getTime()},{$set:{
+              //   relevance:match.relevance,sentimentValue:score,title:theArticle.fullTitle,body:theArticle.bodyHTML.body}
+              // },{upsert:true},
+              //   function(error,affected){
+              //     console.log(affected);
+              // });
             } 
           }
         }
