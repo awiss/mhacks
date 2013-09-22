@@ -59,9 +59,17 @@ function processArticles(hearst_response){
 
   // if the model matches a keyword, returns a sentiment object associated with that model
   function check_model(keyword) {
+<<<<<<< HEAD
 
     for (var i=0;i<hearst_response.content.model.length;i++) {
       if (keyword.text.toLowerCase() == hearst_response.content.model[i].name.toLowerCase()) {
+=======
+    var length=0;
+    var word=null;
+    for (var i=0;i<hearst_response.content.model.length;i++) { 
+      var reg = new RegExp("(^|\\s)"+hearst_response.content.model[i].name+"(\\s|$)");
+      if (reg.test(keyword.text)) {
+>>>>>>> 1ab76dec1445ae6199721fb3dedf056de0b227c8
         keyword.text=hearst_response.content.model[i].name;
         return keyword;
       }  
@@ -76,6 +84,7 @@ function processArticles(hearst_response){
     (function(theArticle){
       alchemy.keywords(text, {sentiment:1}, function(err, response) {
         if (!err){
+          var foundKeyWords = [];
         // See http://www.alchemyapi.com/api/keyword/htmlc.html for format of returned object
           var entities = response.keywords;
           for (var j=0; j<entities.length;j++) {
@@ -86,7 +95,9 @@ function processArticles(hearst_response){
               match = check_model(entity);
               type="model";
             }
-            if (match) {
+            if (match && foundKeyWords.indexOf(match.text)==-1) {
+              foundKeyWords.push(match.text);
+              console.log(match.text);
               var score;
               if(match.sentiment.type=="neutral"){
                 score=0.0;
@@ -95,7 +106,6 @@ function processArticles(hearst_response){
               }
               var name = match.text;
               name = name.charAt(0).toUpperCase() + name.slice(1);
-
 
               Article.update({type:type,name:name,sentimentType:match.sentiment.type, dateInt:new Date(theArticle.publishDate).getTime()},{$set:{
                 relevance:match.relevance,sentimentValue:score,title:theArticle.fullTitle,body:theArticle.bodyHTML.body}

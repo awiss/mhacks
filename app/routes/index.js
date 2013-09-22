@@ -45,11 +45,7 @@ exports.model = function(req,res){
 				articleTitle: docs[i].title
 			});
 		}
-<<<<<<< HEAD
-
-=======
 		}
->>>>>>> 47638b3cdb70cca32ba7badba28ba87a61112e91
 		res.render('index', {title:'Sentimental',make : false, data:modelData, monthData: null});
 
 	});
