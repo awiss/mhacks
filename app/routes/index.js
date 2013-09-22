@@ -37,6 +37,7 @@ exports.model = function(req,res){
 	
 	Article.find({ name:{$in:modelNames} , type: 'model'},{name:1,sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
 		for(var i = 0; i < docs.length; i++) {
+			if(!artTitleExists(docs[i].title,modelData[docs[i].name])){
 			modelData[docs[i].name].push({ 
 				y: docs[i].sentimentValue * docs[i].relevance,
 				x: docs[i].dateInt,
@@ -44,7 +45,11 @@ exports.model = function(req,res){
 				articleTitle: docs[i].title
 			});
 		}
+<<<<<<< HEAD
 
+=======
+		}
+>>>>>>> 47638b3cdb70cca32ba7badba28ba87a61112e91
 		res.render('index', {title:'Sentimental',make : false, data:modelData, monthData: null});
 
 	});
@@ -68,17 +73,17 @@ exports.make = function(req,res){
 
 	Entity.find({ name: { $in: makeNames }, type: 'make'},{name:1,sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
 		for(var i = 0; i < docs.length; i++) {
-			if(docs[i].name=='Toyota') console.log(docs[i]);
 			if(docs[i].relevance>0.5){
-
-				var yvalue = docs[i].sentimentValue * docs[i].relevance;
-				addtoMonthData(docs[i].name,docs[i].dateInt,yvalue);
-				makeData[docs[i].name].push({ 
-					y: yvalue,
-					x: docs[i].dateInt,
-					mongoId: docs[i]._id,
-					articleTitle: docs[i].title
-				});
+				if(!artTitleExists(docs[i].title,makeData[docs[i].name])){
+					var yvalue = docs[i].sentimentValue * docs[i].relevance;
+					addtoMonthData(docs[i].name,docs[i].dateInt,yvalue);
+					makeData[docs[i].name].push({ 
+						y: yvalue,
+						x: docs[i].dateInt,
+						mongoId: docs[i]._id,
+						articleTitle: docs[i].title
+					});
+				}
 			}
 		}
 		function average(arr){
@@ -131,4 +136,12 @@ exports.body = function(req,res){
 			}
 		});
 	}
+}
+function artTitleExists(title,obj){
+	for(var i=0;i<obj.length;i++){
+		if(obj[i].articleTitle==title){
+			return true;
+		}
+	}
+	return false;
 }

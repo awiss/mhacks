@@ -86,6 +86,7 @@ $(document).ready(function(){
             "July", "August", "September", "October", "November", "December" ];
             var str = monthNames[theDate.getMonth()] + " " + theDate.getFullYear() +'<table>';
             for (var i=0;i<this.points.length;i++){
+              str += '<tr><td><span style="color: '+this.points[i].series.color+'">'+this.points[i].series.name+'</span></td></tr>'; 
               str+= '<tr><td><span style="color: '+this.points[i].series.color+'">Weighted Sentiment:</span> <b>'+ Math.round(this.points[i].y*10000)/10000+'</b></td></tr>'
             }         
             return str + '</table>'
