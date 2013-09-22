@@ -18,7 +18,7 @@ $(document).ready(function(){
         zoomType: 'x'
       },
       title: {
-        text: modelName
+        text: titleArr.toString()
       },
       subtitle: {
       	text: 'Weighted Sentiment vs Date'
