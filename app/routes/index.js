@@ -46,15 +46,12 @@ exports.make = function(req,res){
 
 	Entity.find({ name: { $in: makeNames }, type: 'make'},{name:1,sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
 		for(var i = 0; i < docs.length; i++) {
-
-			if(docs[i].relevance>0.7){
-				makeData[docs[i].name].push({ 
-					y: docs[i].sentimentValue * docs[i].relevance*docs[i].relevance*docs[i].relevance,
-					x: docs[i].dateInt,
-					mongoId: docs[i]._id,
-					articleTitle: docs[i].title
-				});
-			}
+			makeData[docs[i].name].push({ 
+				y: docs[i].sentimentValue * docs[i].relevance*docs[i].relevance*docs[i].relevance,
+				x: docs[i].dateInt,
+				mongoId: docs[i]._id,
+				articleTitle: docs[i].title
+			});
 		}
 		res.render('index', {modelName: makeName, data:makeData});
 	});
