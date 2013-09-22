@@ -59,9 +59,7 @@ $(document).ready(function(){
       yAxis: {
           title: {
               text: 'Weighted Sentiment'
-          },
-          min: -.5,
-          minRange: .9
+          }
       },
       series: seriesArr
   });

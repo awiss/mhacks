@@ -4,12 +4,17 @@ block content
   script
     var seriesArr = [];
     var data = !{JSON.stringify(data)};
+    var monthData = !{JSON.stringify(monthData)};
     var titleArr = [];
     for(x in data){
       titleArr.push(x);
       seriesArr.push({
         name:x,
         data:data[x]
+        });
+      seriesArr.push({
+        name:x + " avg",
+        data:monthData[x]
         });
     }
   script(src="/js/highchartTheme.js")
