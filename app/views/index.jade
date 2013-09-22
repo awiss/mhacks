@@ -2,11 +2,15 @@ extends layout
 
 block content
   script
+    var seriesArr = [];
     var data = !{JSON.stringify(data)};
-    console.log(data);
-    console.log(titles);
+    for(x in data){
+      seriesArr.push({
+        name:x,
+        data:data[x]
+        });
+    }
     var modelName = "#{modelName}";
-    console.log(modelName);
     var data = [];
     for (var i=0; i < values.length; i++){
       data[i] = {x:dates[i], y:values[i],mongoId:ids[i],articleTitle:titles[i]};

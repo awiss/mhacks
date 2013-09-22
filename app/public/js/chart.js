@@ -63,9 +63,6 @@ $(document).ready(function(){
           min: -.5,
           minRange: .9
       },
-      series: [{
-          name: modelName,
-          data: data
-      }]
+      series: seriesArr
   });
 });
