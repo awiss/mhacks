@@ -5,7 +5,7 @@ var Article = mongoose.model("Article");
 var AlchemyAPI = require('alchemy-api');
 var alchemy = new AlchemyAPI('2094dd01fd7cbceb7e1bb916840e40e81f25d16f');
 
-pull(9,1,9,2);
+pull(12,6,12,7);
 function pull(year,month,nextYear,nextMonth){
   if(year<13 || month<10){
     console.log(year);
@@ -56,7 +56,7 @@ function processArticles(hearst_response){
   // if the model matches a keyword, returns a sentiment object associated with that model
   function check_model(keyword) {
     for (var i=0;i<hearst_response.content.model.length;i++) {
-      if (keyword.text.toLowerCase() === hearst_response.content.model[i].name.toLowerCase()) {
+      if (keyword..toLowerCase() === hearst_response.content.model[i].name.toLowerCase()) {
         return keyword;
       }
     }
@@ -87,10 +87,11 @@ function processArticles(hearst_response){
               } else {
                 score = match.sentiment.score;
               }
-              Article.update({name:match.text, type:type, dateInt:new Date(theArticle.publishDate).getTime(),
-                relevance:match.relevance},{$set:{sentimentValue:score}}, 
-                function(error,affected){
-                  console.log(affected);
+              var name = match.text;
+              name = name.charAt(0).toUpperCase() + name.slice(1);
+              Article.create({type:type, sentimentType:match.sentiment.type, dateInt:new Date(theArticle.publishDate).getTime(),
+                relevance:match.relevance,sentimentValue:score,name:name,title:theArticle.fullTitle,body:theArticle.bodyHTML.body}, 
+                function(error){
               });
             } 
           }

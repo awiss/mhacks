@@ -12,38 +12,46 @@ exports.index = function(req, res){
 exports.model = function(req,res){
 	var modelName = req.params.model;
 	modelName = modelName.replace('_',' ');
-	Article.find({ name: modelName, type: 'model'},{sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
-		var values = [];
-		var dates = [];
-		var ids = [];
-		var titles = [];
+	modelNames = modelName.split('&');
+	var modelData = {};
+	for(var i=0; i<modelNames.length;i++){
+		modelData[modelNames[i]]=[];
+	}
+	Article.find({ name:{$in:modelNames} , type: 'model'},{name:1,sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
 		for(var i = 0; i < docs.length; i++) {
-			console.log(docs[i].sentimentValue);
-			console.log(docs[i].relevance);
-			values.push(docs[i].sentimentValue * docs[i].relevance);
-			dates.push(docs[i].dateInt);
-			ids.push(docs[i]._id);
-			titles.push(docs[i].title);
+			modelData[docs[i].name].push({ 
+				y: docs[i].sentimentValue * docs[i].relevance,
+				x: docs[i].dateInt,
+				mongoId: docs[i]._id,
+				articleTitle: docs[i].title
+			});
 		}
-		res.render('index', {modelName: modelName, values: values, dates: dates, ids:ids,titles:titles});
+		res.render('index', {modelName: modelName, data:modelData});
 	});
 };
 
 exports.make = function(req,res){
 	var makeName = req.params.make;
 	makeName = makeName.replace('_', ' ');
-	Article.find({ name: makeName, type: 'make'},{sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
-		var values = [];
-		var ids = [];
-		var titles = [];
-		var dates = [];
+	console.log(makeName);
+	makeNames = makeName.split('&');
+	console.log(makeNames);
+	var makeData = {};
+	for(var i=0; i<makeNames.length;i++){
+		console.log(makeNames[i]);
+		makeData[makeNames[i]]=[];
+	}
+	Article.find({ name: { $in: makeNames }, type: 'make'},{name:1,sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
 		for(var i = 0; i < docs.length; i++) {
-			values.push(docs[i].sentimentValue * docs[i].relevance);
-			dates.push(docs[i].dateInt);
-			ids.push(docs[i]._id);
-			titles.push(docs[i].title);
+			console.log(docs[i]);
+			makeData[docs[i].name].push({ 
+				y: docs[i].sentimentValue * docs[i].relevance,
+				x: docs[i].dateInt,
+				mongoId: docs[i]._id,
+				articleTitle: docs[i].title
+			});
 		}
-		res.render('index', {modelName: makeName, values: values, dates: dates, ids:ids,titles:titles});
+		res.render('index', {modelName: makeName, data:makeData});
 	});
 };
 

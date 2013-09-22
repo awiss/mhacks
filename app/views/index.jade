@@ -2,11 +2,8 @@ extends layout
 
 block content
   script
-    var values = [#{values}]; 
-    var dates = [#{dates}];
-    var titles = !{JSON.stringify(titles)};
-    var ids = !{JSON.stringify(ids)};
-    console.log(ids);
+    var data = !{JSON.stringify(data)};
+    console.log(data);
     console.log(titles);
     var modelName = "#{modelName}";
     var data = [];
