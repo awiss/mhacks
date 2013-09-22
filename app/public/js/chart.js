@@ -18,7 +18,7 @@ $(document).ready(function(){
         zoomType: 'x'
       },
       title: {
-        text: titleArr.toString()
+        text: titleArr.join(', ')
       },
       subtitle: {
       	text: 'Weighted Sentiment vs Date'

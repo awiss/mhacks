@@ -17,7 +17,9 @@ exports.model = function(req,res){
 	for(var i=0; i<modelNames.length;i++){
 		modelData[modelNames[i]]=[];
 	}
+	var first = new Date().getTime();
 	Article.find({ name:{$in:modelNames} , type: 'model'},{name:1,sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
+		console.log(new Date().getTime()-first);
 		for(var i = 0; i < docs.length; i++) {
 			modelData[docs[i].name].push({ 
 				y: docs[i].sentimentValue * docs[i].relevance,
@@ -41,6 +43,7 @@ exports.make = function(req,res){
 		console.log(makeNames[i]);
 		makeData[makeNames[i]]=[];
 	}
+
 	Article.find({ name: { $in: makeNames }, type: 'make'},{name:1,sentimentValue:1,relevance:1,dateInt:1,title:1}).sort({dateInt:'asc'}).exec(function(err, docs){
 		for(var i = 0; i < docs.length; i++) {
 			console.log(docs[i]);
