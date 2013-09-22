@@ -76,12 +76,23 @@ $(document).ready(function(){
       tooltip: {
       	shared: true,
         useHTML: true,
-        headerFormat: '{point.key}<table>',
-        pointFormat: '<tr><td>Article Title:</td></tr>' +
-                  '<td style="text-align: left"><b>{point.articleTitle}</b></td>' +
-        							'<tr><td><span style="color: {series.color}">Weighted Sentiment:</span> <b>{point.y}</b></td>' +
-        						'</tr>',
-        footerFormat: '</table>',
+        formatter: function(){
+          if(this.points[0].series.name.indexOf('avg')>-1){
+            var theDate =new Date(this.points[0].x);
+            var monthNames = [ "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December" ];
+            var str = monthNames[theDate.getMonth()] + " " + theDate.getFullYear() +'<table>';
+            for (var i=0;i<this.points.length;i++){
+              str+= '<tr><td><span style="color: '+this.points[i].series.color+'">Weighted Sentiment:</span> <b>'+ Math.round(this.points[i].y*10000)/10000+'</b></td></tr>'
+            }         
+            return str + '</table>'
+          } else {
+            return new Date(this.points[0].x).toDateString() +'<table>' +'<tr><td>Article Title:</td></tr>' +
+                  '<td style="text-align: left"><b>'+this.points[0].point.articleTitle+'</b></td>' +
+                      '<tr><td><span style="color: '+this.points[0].series.color+'">Weighted Sentiment:</span> <b>'+ Math.round(this.points[0].y*10000)/10000+'</b></td>' +
+                    '</tr>' + '</table>'
+          }
+        },
         valueDecimals: 4
       },
       xAxis: {
@@ -93,7 +104,7 @@ $(document).ready(function(){
       yAxis: {
           title: {
               text: 'Weighted Sentiment'
-          }
+          },
       },
       series: seriesArr
   });

@@ -50,6 +50,7 @@ function processArticles(hearst_response){
   function check_make(keyword) {
     for (var i=0;i<hearst_response.content.make.length;i++) {
       if (keyword.text.toLowerCase().indexOf(hearst_response.content.make[i].name.toLowerCase())>-1) {
+        keyword.text = hearst_response.content.make[i].name;
         return keyword;
       }
     }
@@ -92,10 +93,12 @@ function processArticles(hearst_response){
               }
               var name = match.text;
               name = name.charAt(0).toUpperCase() + name.slice(1);
-              Article.create({type:type, sentimentType:match.sentiment.type, dateInt:new Date(theArticle.publishDate).getTime(),
-                relevance:match.relevance,sentimentValue:score,name:name,title:theArticle.fullTitle,body:theArticle.bodyHTML.body}, 
-                function(error){
-                  console.log(error);
+
+              Entity.update({type:type, sentimentType:match.sentiment.type, dateInt:new Date(theArticle.publishDate).getTime(),
+                relevance:match.relevance,sentimentValue:score},{name:name}, 
+                function(error,affected){
+                  console.log(affected);
+
               });
             } 
           }
