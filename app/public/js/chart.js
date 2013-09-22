@@ -42,12 +42,19 @@ $(document).ready(function(){
       exporting: {
           buttons: {
           	customButton: {
-          	                    x: -62,
-          	                    onclick: function () {
-          	                        alert('Clicked');
-          	                    },
-          	                    symbol: 'circle'
-          	                  },
+      	                    x: -62,
+      	                    onclick: function () {
+      	                    		var series = $('#graphContainer').highcharts().series;
+      	                    		var vis = false;
+      	                    		for (var j=0; j < series.length; j+=2){
+      	                    			vis = vis || series[j].visible;
+      	                    		}
+      	                        for (var j=0; j < series.length; j+=2){
+      	                        	series[j].setVisible(!vis);
+      	                        }
+      	                    },
+      	                    symbol: 'circle'
+      	    },
             contextButton: {
 
             }
