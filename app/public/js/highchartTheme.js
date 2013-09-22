@@ -15,7 +15,7 @@ Highcharts.theme = {
          ]
       },
       borderWidth: 0,
-      borderRadius: 15,
+      borderRadius: 0,
       plotBackgroundColor: null,
       plotShadow: false,
       plotBorderWidth: 0
@@ -23,7 +23,7 @@ Highcharts.theme = {
    title: {
       style: {
          color: '#FFF',
-         font: '16px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+         font: '21px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
       }
    },
    subtitle: {
@@ -45,7 +45,7 @@ Highcharts.theme = {
       title: {
          style: {
             color: '#AAA',
-            font: 'bold 12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+            font: 'bold 16px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
          }
       }
    },
@@ -65,7 +65,7 @@ Highcharts.theme = {
       title: {
          style: {
             color: '#AAA',
-            font: 'bold 12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+            font: 'bold 16px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
          }
       }
    },

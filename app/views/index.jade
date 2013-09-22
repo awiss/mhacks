@@ -6,6 +6,7 @@ block content
     console.log(data);
     console.log(titles);
     var modelName = "#{modelName}";
+    console.log(modelName);
     var data = [];
     for (var i=0; i < values.length; i++){
       data[i] = {x:dates[i], y:values[i],mongoId:ids[i],articleTitle:titles[i]};
@@ -13,7 +14,7 @@ block content
   script(src="/js/highchartTheme.js")
   script(src="/js/chart.js")
   #container
-    h1 #{modelName}
     #graphContainer
-    
-
+    #overlay
+      #overlayModal
+        #overlayText

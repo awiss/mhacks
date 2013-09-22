@@ -1,13 +1,27 @@
 $(document).ready(function(){
+
+	function overlay() {
+		$('#overlay').fadeIn();
+		document.getElementById('overlayModal').scrollTop = 0;
+	  $('#overlay').show();
+	}
+
+	$('#overlay').on('click', function(){
+		$('#overlay').fadeOut();
+		$('#overalyText').empty();
+	});
   var highchartsOptions = Highcharts.setOptions(Highcharts.theme); 
   console.log(data);
   $('#graphContainer').highcharts({
       chart: {
-          type: 'line',
-          zoomType: 'x'
+        type: 'line',
+        zoomType: 'x'
       },
       title: {
-          text: 'Weighted Sentiment vs Time'
+        text: modelName
+      },
+      subtitle: {
+      	text: 'Weighted Sentiment vs Date'
       },
       plotOptions: {
       	series: {
@@ -15,8 +29,10 @@ $(document).ready(function(){
       		point: {
       			events: {
       				click: function() {
+      					var self = this;
       					$.ajax({url:"http://localhost:3000/body/"+this.mongoId,success:function(res){
-                  console.log(res);
+                  overlay();
+                  $('#overlayText').html('<h2>' + self.articleTitle + '</h2>' + res);
                 }});
       				},
       			}
