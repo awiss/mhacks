@@ -15,20 +15,20 @@ $(document).ready(function(){
     exp = {
       buttons: {
         customButton: {
-                        x: -62,
-                        onclick: function () {
-                            var chart = $('#graphContainer').highcharts();
-                            var series = chart.series;
-                            var vis = false;
-                            for (var j=0; j < series.length; j+=2){
-                              vis = vis || series[j].visible;
-                            }
-                            for (var j=0; j < series.length; j+=2){
-                              series[j].setVisible(!vis,false);
-                            }
-                            chart.redraw();
-                        },
-                        symbol: 'circle'
+          x: -62,
+          onclick: function () {
+              var chart = $('#graphContainer').highcharts();
+              var series = chart.series;
+              var vis = false;
+              for (var j=0; j < series.length; j+=2){
+                vis = vis || series[j].visible;
+              }
+              for (var j=0; j < series.length; j+=2){
+                series[j].setVisible(!vis,false);
+              }
+              chart.redraw();
+          },
+          symbol: 'circle'
         },
         contextButton: {
 

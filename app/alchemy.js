@@ -59,17 +59,12 @@ function processArticles(hearst_response){
 
   // if the model matches a keyword, returns a sentiment object associated with that model
   function check_model(keyword) {
-<<<<<<< HEAD
 
-    for (var i=0;i<hearst_response.content.model.length;i++) {
-      if (keyword.text.toLowerCase() == hearst_response.content.model[i].name.toLowerCase()) {
-=======
     var length=0;
     var word=null;
     for (var i=0;i<hearst_response.content.model.length;i++) { 
       var reg = new RegExp("(^|\\s)"+hearst_response.content.model[i].name+"(\\s|$)");
       if (reg.test(keyword.text)) {
->>>>>>> 1ab76dec1445ae6199721fb3dedf056de0b227c8
         keyword.text=hearst_response.content.model[i].name;
         return keyword;
       }  
