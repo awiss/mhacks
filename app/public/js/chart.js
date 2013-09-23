@@ -68,7 +68,7 @@ $(document).ready(function(){
       					var self = this;
       					$.ajax({url:"http://localhost:3000/body/"+this.mongoId+"/"+make,success:function(res){
                   overlay();
-                  $('#overlayText').html('<h2>' + self.articleTitle + '</h2>' + res);
+                  $('#overlayText').html('<h2><em>' + self.articleTitle + '</em></h2>' + res);
                 }});
       				},
       			}
