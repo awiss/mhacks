@@ -39,7 +39,7 @@ exports.model = function(req,res){
 		for(var i = 0; i < docs.length; i++) {
 			if(!artTitleExists(docs[i].title,modelData[docs[i].name])){
 			modelData[docs[i].name].push({ 
-				y: docs[i].sentimentValue * docs[i].relevance,
+				y: docs[i].sentimentValue * docs[i].relevance* docs[i].relevance* docs[i].relevance,
 				x: docs[i].dateInt,
 				mongoId: docs[i]._id,
 				articleTitle: docs[i].title
@@ -70,7 +70,7 @@ exports.make = function(req,res){
 		for(var i = 0; i < docs.length; i++) {
 			if(docs[i].relevance>0.5){
 				if(!artTitleExists(docs[i].title,makeData[docs[i].name])){
-					var yvalue = docs[i].sentimentValue * docs[i].relevance;
+					var yvalue = docs[i].sentimentValue * docs[i].relevance* docs[i].relevance;
 					addtoMonthData(docs[i].name,docs[i].dateInt,yvalue);
 					makeData[docs[i].name].push({ 
 						y: yvalue,

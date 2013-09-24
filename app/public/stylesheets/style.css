@@ -57,4 +57,11 @@ a {
 
 #overlayText {
 	padding: 20px;
+	font-family: Georgia, sans-serif;
+}
+
+#overlayText a {
+	text-decoration: none;
+	font-weight: bold;
+	color: #089adb;
 }
