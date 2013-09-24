@@ -61,7 +61,7 @@ a {
 }
 
 #overlayText a {
-	text-decoration: none;
-	font-weight: bold;
 	color: #089adb;
+	font-weight: bold;
+	text-decoration: none;
 }

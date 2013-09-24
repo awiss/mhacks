@@ -47,6 +47,7 @@ exports.model = function(req,res){
 		}
 		}
 		res.render('index', {title:'Sentimental',make : false, data:modelData, monthData: null});
+
 	});
 };
 

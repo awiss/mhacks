@@ -59,6 +59,7 @@ function processArticles(hearst_response){
 
   // if the model matches a keyword, returns a sentiment object associated with that model
   function check_model(keyword) {
+
     var length=0;
     var word=null;
     for (var i=0;i<hearst_response.content.model.length;i++) { 
@@ -100,12 +101,14 @@ function processArticles(hearst_response){
               }
               var name = match.text;
               name = name.charAt(0).toUpperCase() + name.slice(1);
+
               Article.update({type:type,name:name,sentimentType:match.sentiment.type, dateInt:new Date(theArticle.publishDate).getTime()},{$set:{
                 relevance:match.relevance,sentimentValue:score,title:theArticle.fullTitle,body:theArticle.bodyHTML.body}
               },{upsert:true},
                 function(error,affected){
                   console.log(affected);
               });
+
             } 
           }
         }
