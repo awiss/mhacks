@@ -7,6 +7,7 @@ var Article = mongoose.model("Article");
 var AlchemyAPI = require('alchemy-api');
 var alchemy = new AlchemyAPI('2094dd01fd7cbceb7e1bb916840e40e81f25d16f');
 var counter = 0;
+// change these at the beginning because I'm too lazy for proper script args
 pull(9,1,9,2);
 
 function pull(year,month,nextYear,nextMonth){
