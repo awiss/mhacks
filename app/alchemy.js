@@ -11,6 +11,11 @@ var counter = 0;
 pull(9,1,9,2);
 
 function pull(year,month,nextYear,nextMonth){
+  /* 
+  * This weird recursive call probably looks pretty weird. Thats because the Car and Driver api was super rate limited
+  * and failed for queries of more than a month of articles, and we needed to pull all of it.
+  * So I hacked around it by making a ton of staggered calls and processing and populating the db as I went.
+  */
   if(year<13 || month<10){
     console.log(year);
     console.log(month);
@@ -26,7 +31,8 @@ function pull(year,month,nextYear,nextMonth){
     var nd = (nextMonth%10).toString();
     console.log(""+a+b+c+d);
     console.log(""+na+nb+nc+nd);
-
+    // populate.js contains the actual api call
+    // No local caching of articles before we run them through Alchemy, because hackathon
     require("./populate")('20'+a+b+c+d+'00','20'+na+nb+nc+nd+'00',processArticles);
     month++;
     if(month==13){
